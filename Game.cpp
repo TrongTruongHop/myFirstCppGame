@@ -1,4 +1,5 @@
-#include"Game.hpp"
+﻿#include"Game.hpp"
+SDL_Texture* playerTex;
 
 Game::Game(){ 
 
@@ -29,7 +30,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = true;
 	}
 	else isRunning = false;
+	SDL_Surface* tmpSurface = IMG_Load("Spongebob.png");
+	playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
+	SDL_FreeSurface(tmpSurface);
 }
+
 void Game::handleEvents() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
@@ -47,6 +52,7 @@ void Game::update() {
 }
 void Game::render() {
 	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, playerTex, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
 void Game::clean() {
