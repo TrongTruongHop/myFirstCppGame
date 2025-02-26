@@ -1,7 +1,9 @@
 ﻿#include"Game.h"
 #include "textureManager.h";
-SDL_Texture* playerTex;
-SDL_Rect srcR, destR;
+#include "GameObject.h"
+
+GameObject* player;
+GameObject* enemy;
 Game::Game(){ 
 
 }
@@ -31,7 +33,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = true;
 	}
 	else isRunning = false;
-	playerTex = textureManager::LoadTexture("Assets/Spongebob.png",renderer);
+	player = new GameObject("Assets/player.png", renderer,0,0);
+	enemy = new GameObject("Assets/Spongebob.png", renderer, 50, 50);
 }
 
 void Game::handleEvents() {
@@ -46,16 +49,13 @@ void Game::handleEvents() {
 	}
 }
 void Game::update() {
-	cnt++;
-	destR.h = 128;
-	destR.w = 128;
-	destR.x = cnt;
-	
-	std::cout << cnt << std::endl;
+	player->Update();
+	enemy->Update();
 }
 void Game::render() {
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, playerTex, NULL, &destR);
+	player->Render();
+	enemy->Render();
 	SDL_RenderPresent(renderer);
 }
 void Game::clean() {
