@@ -1,9 +1,16 @@
 ﻿#include"Game.h"
 #include "textureManager.h";
-#include "GameObject.h"
+#include "Map.h"
+#include "Components.h"
 
-GameObject* player;
-GameObject* enemy;
+
+
+Map* map;
+Manager manager; 
+SDL_Renderer* Game::renderer = nullptr;
+
+auto& player(manager.addEntity());
+
 Game::Game(){ 
 
 }
@@ -33,8 +40,12 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		isRunning = true;
 	}
 	else isRunning = false;
-	player = new GameObject("Assets/player.png", renderer,0,0);
-	enemy = new GameObject("Assets/Spongebob.png", renderer, 50, 50);
+
+	map = new Map();
+	//ecs implementation
+	player.addComponent<PositionComponent>();
+	player.addComponent<SpriteComponent>("Assets/player.png");
+	
 }
 
 void Game::handleEvents() {
@@ -49,13 +60,15 @@ void Game::handleEvents() {
 	}
 }
 void Game::update() {
-	player->Update();
-	enemy->Update();
+	manager.refresh();
+	manager.update();
+	
 }
 void Game::render() {
 	SDL_RenderClear(renderer);
-	player->Render();
-	enemy->Render();
+	map->DrawMap();
+	
+	manager.draw();
 	SDL_RenderPresent(renderer);
 }
 void Game::clean() {
