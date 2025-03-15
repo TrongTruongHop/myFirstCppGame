@@ -3,12 +3,12 @@
 SDL_Texture* textureManager::LoadTexture(const char* texture) {
 	SDL_Surface* tmpSurface = IMG_Load(texture);
 	SDL_Texture* tex = SDL_CreateTextureFromSurface(Game::renderer,tmpSurface);
-	SDL_FreeSurface;(tmpSurface);
+	SDL_FreeSurface(tmpSurface);
 
 	return tex; 
 }
 
-void textureManager::Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest)
+void textureManager::Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest,SDL_RendererFlip flip)
 {
-	SDL_RenderCopy(Game::renderer, tex, NULL, &dest);
+	SDL_RenderCopyEx(Game::renderer, tex, &src, &dest,NULL,NULL,flip);
 }

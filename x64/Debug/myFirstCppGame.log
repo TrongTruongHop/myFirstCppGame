@@ -1,6 +1,4 @@
-﻿  Game.cpp
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\textureManager.h(3,9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'Game.cpp')
-  
+﻿  Collision.cpp
+  Game.cpp
+  Generating Code...
   myFirstCppGame.vcxproj -> D:\code\myFirstCppGame\myFirstCppGame\x64\Debug\myFirstCppGame.exe

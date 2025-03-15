@@ -24,10 +24,16 @@
     <ClCompile Include="textureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ECS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,16 +44,13 @@
     <ClInclude Include="textureManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
+    <ClInclude Include="Map.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SpriteComponent.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="PositionComponent.h">
+    <ClInclude Include="TransformComponent.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ECS.h">
@@ -55,6 +58,24 @@
     </ClInclude>
     <ClInclude Include="Components.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardController.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TileComponent.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
