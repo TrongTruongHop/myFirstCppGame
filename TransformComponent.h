@@ -1,4 +1,5 @@
 #pragma once
+
 #include"Components.h"
 #include"Vector2D.h"
 class TransformComponent : public Component {
@@ -12,14 +13,15 @@ public:
 	int scale = 1;
 	
 
-	int speed = 2;
+	int speed = 3;
 
 
 	TransformComponent() {
 		position.Zero();
 	}
 	TransformComponent(int sc) {
-		position.Zero();
+		position.x=400;
+		position.y = 320;
 		scale = sc;
 	}
 	TransformComponent(float x,float y) {

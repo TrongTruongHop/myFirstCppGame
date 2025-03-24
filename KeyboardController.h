@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Game.h"
 #include "ECS.h"
@@ -36,6 +36,11 @@ public:
 				break;
 			}
 		}
+		if (Game::event.type == SDL_MOUSEBUTTONDOWN) {
+			if (Game::event.button.button == SDL_BUTTON_LEFT) {
+				Game::assets->CreateProjectile(Vector2D(transform->position.x + 40, transform->position.y + 30), 1000, 2, "projectile");
+			}
+		}
 		if (Game::event.type == SDL_KEYUP) {
 			switch (Game::event.key.keysym.sym) {
 			case SDLK_w:
@@ -54,6 +59,9 @@ public:
 			case SDLK_s:
 				transform->velocity.y = 0;
 				sprite->Play("Idle");
+				break;
+			case SDLK_ESCAPE:
+				Game::isRunning = false;
 				break;
 			default:
 				break;
