@@ -3,14 +3,19 @@
 #include "Game.h"
 #include "ECS.h"
 #include "Components.h"
+#include <chrono>
 
 class KeyboardController : public Component {
 public:
 	TransformComponent* transform;
 	SpriteComponent* sprite;
+	int bulletCooldown = 300;
+	std::chrono::steady_clock::time_point lastBulletTime;
+
 	void init() override {
 		transform = &entity->getComponent<TransformComponent>();
 		sprite = &entity->getComponent<SpriteComponent>();
+		lastBulletTime = std::chrono::steady_clock::now();
 	}
 	void update() override {
 		if (Game::event.type == SDL_KEYDOWN) {
@@ -38,6 +43,10 @@ public:
 		}
 		if (Game::event.type == SDL_MOUSEBUTTONDOWN) {
 			if (Game::event.button.button == SDL_BUTTON_LEFT) {
+				auto now = std::chrono::steady_clock::now();
+				auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastBulletTime).count();
+				if (elapsed < bulletCooldown) return;
+				lastBulletTime = std::chrono::steady_clock::now();
 				Game::assets->CreateProjectile(Vector2D(transform->position.x + 40, transform->position.y + 30), 1000, 2, "projectile");
 			}
 		}

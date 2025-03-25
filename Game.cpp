@@ -111,6 +111,7 @@ void Game::update()
 			std::cout << "Player Hit" << std::endl;
 			
 		}
+		
 	}
 
 	camera.x = player.getComponent<TransformComponent>().position.x - 400;
