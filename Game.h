@@ -15,7 +15,7 @@ public:
 	~Game();
 
 	void init(const char* title, int width, int height, bool fullscreen);
-
+	void spawnEnemy(std::string type, int x, int y);
 	void handleEvents();
 	void update();
 	bool running() { return isRunning; }
@@ -35,7 +35,8 @@ public:
 		groupMap,
 		groupPlayers,
 		groupColliders,
-		groupProjectiles
+		groupProjectiles,
+		groupEnemies
 	};
 
 private:

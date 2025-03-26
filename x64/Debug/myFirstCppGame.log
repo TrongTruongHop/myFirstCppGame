@@ -1,30 +1,4 @@
-﻿  AssetManager.cpp
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(26,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'AssetManager.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(27,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'AssetManager.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(40,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'AssetManager.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'AssetManager.cpp')
-  
-  Collision.cpp
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(26,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Collision.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(27,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Collision.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(40,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Collision.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Collision.cpp')
-  
-  Game.cpp
+﻿  Game.cpp
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(26,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'Game.cpp')
   
@@ -37,8 +11,10 @@ D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(40,27): war
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(117,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(118,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(97,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(98,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(191,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(192,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244:         with
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244:         [
@@ -47,25 +23,22 @@ D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244
   (compiling source file 'Game.cpp')
       D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33):
       the template instantiation context (the oldest one first) is
-          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(59,9):
+          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(71,9):
           see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
           with
           [
               T=TransformComponent
           ]
   
-  Map.cpp
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(26,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Map.cpp')
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+      D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33):
+      the template instantiation context (the oldest one first) is
+          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(83,8):
+          see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int&,int&,int,int,int>(int &,int &,int &&,int &&,int &&)' being compiled
+          with
+          [
+              T=TransformComponent
+          ]
   
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(27,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(40,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-  Generating Code...
   myFirstCppGame.vcxproj -> D:\code\myFirstCppGame\myFirstCppGame\x64\Debug\myFirstCppGame.exe
