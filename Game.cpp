@@ -4,6 +4,7 @@
 #include "Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
+#include "HealthComponent.h"
 #include <chrono> 
 #include<cmath>
 #include <ctime> 
@@ -39,7 +40,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 {
 	srand(static_cast<unsigned>(time(0)));
 	lastSpawnTime = std::chrono::steady_clock::now();
-	int flags = 1;
+	int flags = 0;
 
 	if (fullscreen)
 	{
@@ -72,6 +73,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
+	player.addComponent<HealthComponent>(100);
 	player.addGroup(groupPlayers);
 
 
@@ -85,15 +87,19 @@ void Game::spawnEnemy(std::string type, int x, int y) {
 	int speed;  
 	if (type == "fast") {
 		enemy.addComponent<SpriteComponent>("enemy_fast",true);
+		enemy.addComponent<HealthComponent>(100);
+
 		speed = 3;
 	}
 	else {
 		enemy.addComponent<SpriteComponent>("enemy_slow",true);
+		enemy.addComponent<HealthComponent>(200);
 		speed = 1;
 	}
 
 	enemy.addGroup(Game::groupEnemies);
 	enemy.addComponent<ColliderComponent>("enemy");
+	
 	enemy.getComponent<TransformComponent>().velocity.x = speed;
 	enemy.getComponent<TransformComponent>().velocity.y = speed;	
 
@@ -170,9 +176,15 @@ void Game::update()
 			if (Collision::AABB(p->getComponent<ColliderComponent>().collider, e->getComponent<ColliderComponent>().collider))
 			{
 				std::cout << "Enemy Hit" << std::endl;
-				e->destroy();
+				e->getComponent<HealthComponent>().takeDamage(50,false);
 				p->destroy();
 			}
+		}
+		if (Collision::AABB(playerCol, e->getComponent<ColliderComponent>().collider))
+		{
+			std::cout << "Player Hit" << std::endl;
+			player.getComponent<HealthComponent>().takeDamage(10, true);
+			e->destroy();
 		}
 	}
 	auto now = std::chrono::steady_clock::now();
