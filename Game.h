@@ -4,6 +4,7 @@
 #include "SDL_image.h"
 #include <iostream>
 #include <vector>
+#include<SDL_ttf.h>
 
 class AssetManager;
 class ColliderComponent;
@@ -13,6 +14,7 @@ class Game
 public:
 	Game();
 	~Game();
+
 
 	void init(const char* title, int width, int height, bool fullscreen);
 	void spawnEnemy(std::string type, int x, int y);
@@ -27,7 +29,7 @@ public:
 	static SDL_Event event;
 	static bool isRunning;
 	static SDL_Rect camera;
-
+	static bool spawnTriggered;
 	static AssetManager* assets;
 
 	enum groupLabels : std::size_t
@@ -36,7 +38,8 @@ public:
 		groupPlayers,
 		groupColliders,
 		groupProjectiles,
-		groupEnemies
+		groupEnemies,
+		groupBosses,
 	};
 
 private:

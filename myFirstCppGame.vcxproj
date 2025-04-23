@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\code\SDL2_image-2.0.1\lib\x64;D:\code\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\code\SDL2_ttf\include;D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\code\SDL2_ttf\lib\x64;D:\code\SDL2_image-2.0.1\lib\x64;D:\code\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\code\SDL2_ttf\include;D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
