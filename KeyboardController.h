@@ -10,12 +10,15 @@ public:
 	TransformComponent* transform;
 	SpriteComponent* sprite;
 	int bulletCooldown = 300;
+	int bombCooldown = 10000;
 	std::chrono::steady_clock::time_point lastBulletTime;
+	std::chrono::steady_clock::time_point lastBombTime;
 
 	void init() override {
 		transform = &entity->getComponent<TransformComponent>();
 		sprite = &entity->getComponent<SpriteComponent>();
 		lastBulletTime = std::chrono::steady_clock::now();
+		lastBombTime = std::chrono::steady_clock::now();
 	}
 	void update() override {
 		if (Game::event.type == SDL_KEYDOWN) {
@@ -49,6 +52,15 @@ public:
 				lastBulletTime = std::chrono::steady_clock::now();
 				Game::assets->CreateProjectile(Vector2D(transform->position.x + 40, transform->position.y + 30), 1000, 2, "projectile");
 			}
+			if (Game::event.button.button == SDL_BUTTON_RIGHT) {
+			
+				auto now = std::chrono::steady_clock::now();
+				auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastBombTime).count();
+				if (elapsed < bombCooldown) return;
+				lastBombTime = std::chrono::steady_clock::now();
+				Game::assets->CreateBomb(Vector2D(transform->position.x + 40, transform->position.y + 30), 1000, 2, "bomb");
+			}
+			
 		}
 		if (Game::event.type == SDL_KEYUP) {
 			switch (Game::event.key.keysym.sym) {

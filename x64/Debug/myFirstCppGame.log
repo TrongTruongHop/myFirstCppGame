@@ -11,10 +11,10 @@ D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(40,27): war
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   (compiling source file 'Game.cpp')
   
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(111,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(112,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(237,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(238,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(130,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(131,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(286,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(287,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244:         with
 D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244:         [
@@ -23,7 +23,7 @@ D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244
   (compiling source file 'Game.cpp')
       D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33):
       the template instantiation context (the oldest one first) is
-          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(76,9):
+          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(91,9):
           see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
           with
           [
@@ -34,26 +34,11 @@ D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33): warning C4244
   (compiling source file 'Game.cpp')
       D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\ECS.h(83,33):
       the template instantiation context (the oldest one first) is
-          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(93,8):
+          D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\Game.cpp(112,8):
           see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int&,int&,int,int,int>(int &,int &,int &&,int &&,int &&)' being compiled
           with
           [
               T=TransformComponent
           ]
   
-  Map.cpp
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(26,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(27,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(40,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-D:\code\myFirstCppGame\myFirstCppGame\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  (compiling source file 'Map.cpp')
-  
-  textureManager.cpp
-  Generating Code...
   myFirstCppGame.vcxproj -> D:\code\myFirstCppGame\myFirstCppGame\x64\Debug\myFirstCppGame.exe

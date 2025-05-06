@@ -9,10 +9,11 @@
 #include<cmath>
 #include <ctime> 
 #include <cstdlib>
-#include <SDL_ttf.h>
 
+#include <sstream>
+#include "AssetManager.h"
 std::chrono::steady_clock::time_point lastSpawnTime;
-int spawnCooldown = 2000;
+int spawnCooldown = 2000; 
 Map* map;
 Manager manager;
 
@@ -20,13 +21,19 @@ SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 AssetManager* Game::assets = new AssetManager(&manager);
 
-SDL_Rect Game::camera = { 0,0,800,640 };\
+SDL_Rect Game::camera = { 0,0,800,640 };
+Game::GameState Game::gameState = MENU;
+bool entitiesInitialized = false;
 
-
+auto& label(manager.addEntity());
+auto& label2(manager.addEntity());
 bool Game::isRunning = false;
 bool Game::spawnTriggered = false;
 auto& player(manager.addEntity());
 auto& boss(manager.addEntity());
+SDL_Rect startButtonRect = { 300, 400, 200, 80 };
+SDL_Rect titleTextRect = { 250, 150, 300, 100 };
+
 Game::Game()
 {
 }
@@ -60,16 +67,24 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
-
+	if (TTF_Init() == -1)
+	{
+		std::cout << "Error : SDL_TTF" << std::endl;
+	}
+	
+	assets->AddFont("OpenSans", "Assets/OpenSans.ttf", 16);
 	assets->AddTexture("terrain_tiles", "Assets/terrain_ss.png");
 	assets->AddTexture("player", "Assets/player_anims.png");
 	assets->AddTexture("projectile", "Assets/ColTex.png");
 	assets->AddTexture("enemy_slow", "Assets/enemy2.png");
 	assets->AddTexture("enemy_fast", "Assets/enemy1.png");
 	assets->AddTexture("boss", "Assets/boss.png");
+	assets->AddTexture("bomb", "Assets/bomb.png");
+	assets->AddTexture("startButton", "Assets/startButton.png");
+	assets->AddTexture("titleText", "Assets/titleText.png");
 
 	map = new Map("terrain_tiles", 3, 32);
-	//ecs implementation
+	
 
 	map->LoadMap("assets/map.map", 25, 20);
 
@@ -80,10 +95,14 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	player.addComponent<HealthComponent>(100);
 	player.addGroup(groupPlayers);
 
+	SDL_Color white = { 255, 255, 255, 255 };
+
+	label.addComponent<UILabel>(10, 10, "Test String", "OpenSans", white);
+	label2.addComponent<UILabel>(10, 30, "Test String", "OpenSans", white);
 	
 	boss.addComponent<TransformComponent>(1120, 750, 32, 32, 5);
 	boss.addComponent<SpriteComponent>("boss", true);
-	boss.addComponent<HealthComponent>(1000);
+	boss.addComponent<HealthComponent>(2000);
 	boss.addComponent<ColliderComponent>("boss");
 	boss.addGroup(groupBosses);
 }
@@ -121,14 +140,13 @@ auto& colliders(manager.getGroup(Game::groupColliders));
 auto& projectiles(manager.getGroup(Game::groupProjectiles));
 auto& enemies(manager.getGroup(Game::groupEnemies));
 auto& bosses(manager.getGroup(Game::groupBosses));
+auto& bombs(manager.getGroup(Game::groupBombs));
 
 void Game::handleEvents()
 {
 
 	SDL_PollEvent(&event);
-
-	switch (event.type)
-	{
+	switch (event.type) {
 	case SDL_QUIT:
 		isRunning = false;
 		break;
@@ -138,12 +156,19 @@ void Game::handleEvents()
 }
 
 
+
 void Game::update()
 {
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
 	
+	std::stringstream ss;
+	std::stringstream ss2;
+	ss << "Player HP: " << player.getComponent<HealthComponent>().health;
+	label.getComponent<UILabel>().SetLabelText(ss.str(), "OpenSans");
+	ss2 << "Boss HP: " << boss.getComponent<HealthComponent>().health;
+	label2.getComponent<UILabel>().SetLabelText(ss2.str(), "OpenSans");
 
 	manager.refresh();
 	manager.update();
@@ -177,6 +202,22 @@ void Game::update()
 		}
 		
 	}
+	for (auto& bo : bombs) {
+		
+		int explosionRadius = 150;
+		for (auto& e : enemies) {
+			auto& enemyTransform = e->getComponent<TransformComponent>();
+			float dx = bo->getComponent<TransformComponent>().position.x - enemyTransform.position.x;
+			float dy = bo->getComponent<TransformComponent>().position.y - enemyTransform.position.y;
+			float distance = std::sqrt(dx * dx + dy * dy);
+			if (distance < explosionRadius) {
+				std::cout << "Enemy Hit" << std::endl;
+				e->getComponent<HealthComponent>().takeDamage(100, false);
+				
+			
+			}
+		}
+	}
 	for (auto& e : enemies) {
 		auto& playerTransform = player.getComponent<TransformComponent>();
 		auto& enemyTransform = e->getComponent<TransformComponent>();
@@ -189,8 +230,8 @@ void Game::update()
 		
 
 		if (distance > 1) {
-			enemyTransform.velocity.x = (dx / distance)/2 ;
-			enemyTransform.velocity.y = (dy / distance)/2;
+			enemyTransform.velocity.x = (dx / distance) ;
+			enemyTransform.velocity.y = (dy / distance);
 		}
 		for (auto& p : projectiles)
 		{
@@ -201,7 +242,7 @@ void Game::update()
 				p->destroy();
 			}
 		}
-		if (Collision::AABB(playerCol, e->getComponent<ColliderComponent>().collider))
+		if (Collision::AABB(player.getComponent<ColliderComponent>().collider, e->getComponent<ColliderComponent>().collider))
 		{
 			std::cout << "Player Hit" << std::endl;
 			player.getComponent<HealthComponent>().takeDamage(10, true);
@@ -217,6 +258,14 @@ void Game::update()
 				p->destroy();
 			}
 		}
+		if (b->getComponent<HealthComponent>().health <= 1000)
+		{
+			spawnCooldown = 1000;
+		}
+		if (b->getComponent<HealthComponent>().health <= 500)
+		{
+			spawnCooldown = 500;
+		}
 	}
 
 	if (spawnTriggered) {
@@ -224,9 +273,9 @@ void Game::update()
 		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastSpawnTime).count();
 
 		if (elapsed >= spawnCooldown) {
-			int spawnIndex = rand() % 2;  // ✅ Choose a random spawn point
+			int spawnIndex = rand() % 2;  
 
-			// ✅ Ensure equal chance for "fast" and "slow" enemies
+			
 			std::string enemyType = (rand() % 2 == 0) ? "slow" : "fast";
 
 			spawnEnemy(enemyType, enemySpawnPositions[spawnIndex][0], enemySpawnPositions[spawnIndex][1]);
@@ -251,6 +300,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+
 	for (auto& t : tiles)
 	{
 		t->draw();
@@ -277,6 +327,12 @@ void Game::render()
 	{
 		b->draw();
 	}
+	for (auto& bo : bombs)
+	{
+		bo->draw();
+	}
+	label.draw();
+	label2.draw();
 	SDL_RenderPresent(renderer);
 
 }

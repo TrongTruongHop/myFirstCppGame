@@ -6,4 +6,5 @@
 #include "ColliderComponent.h"
 #include "TileComponent.h"
 #include "Projectile.h"
-#include "RevProjectile.h"
+#include "bomb.h"
+#include "uilabel.h"

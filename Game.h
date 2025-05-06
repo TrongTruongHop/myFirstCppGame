@@ -24,7 +24,11 @@ public:
 	void render();
 	void clean();
 
+	enum GameState { MENU, PLAYING, GAMEOVER };
+	static GameState gameState;
 
+	static void renderMenu();
+	static void handleMenuEvent(SDL_Event& e);
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static bool isRunning;
@@ -40,7 +44,10 @@ public:
 		groupProjectiles,
 		groupEnemies,
 		groupBosses,
+		groupBombs,
 	};
+	
+
 
 private:
 
