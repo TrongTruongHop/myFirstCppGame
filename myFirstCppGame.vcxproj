@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\code\SDL2_ttf\include;D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\code\SDL2_ttf\lib\x64;D:\code\SDL2_image-2.0.1\lib\x64;D:\code\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\code\SDL2_mixer-devel-2.6.0-VC\SDL2_mixer-2.6.0\include;D:\code\SDL2_ttf\include;D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\code\SDL2_mixer-devel-2.6.0-VC\SDL2_mixer-2.6.0\lib\x64;D:\code\SDL2_ttf\lib\x64;D:\code\SDL2_image-2.0.1\lib\x64;D:\code\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,13 +108,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\code\SDL2_ttf\include;D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\code\SDL2_mixer-devel-2.6.0-VC\SDL2_mixer-2.6.0\include;D:\code\SDL2_ttf\include;D:\code\SDL2_image-2.0.1\include;D:\code\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\code\SDL2_ttf\lib\x64;D:\code\SDL2_image-2.0.1\lib\x64;D:\code\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\code\SDL2_mixer-devel-2.6.0-VC\SDL2_mixer-2.6.0\lib\x64;D:\code\SDL2_ttf\lib\x64;D:\code\SDL2_image-2.0.1\lib\x64;D:\code\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,17 +135,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="audio.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ECS.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="textureManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="audio.h" />
     <ClInclude Include="bomb.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Collision.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="KeyboardController.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="TileComponent.h" />

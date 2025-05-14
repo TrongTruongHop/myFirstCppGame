@@ -24,9 +24,7 @@ public:
 	void render();
 	void clean();
 
-	enum GameState { MENU, PLAYING, GAMEOVER };
-	static GameState gameState;
-
+	void startGame();
 	static void renderMenu();
 	static void handleMenuEvent(SDL_Event& e);
 	static SDL_Renderer* renderer;
@@ -47,10 +45,18 @@ public:
 		groupBombs,
 	};
 	
-
+	static TTF_Font* font;
 
 private:
 
 	int cnt = 0;
 	SDL_Window* window;
 };
+enum class GameState {
+	MENU,
+	PLAYING,
+	GAME_OVER
+};
+
+extern GameState currentState;
+extern bool playerWon;

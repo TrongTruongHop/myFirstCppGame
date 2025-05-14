@@ -9,31 +9,31 @@
 #include<cmath>
 #include <ctime> 
 #include <cstdlib>
-
+#include "menu.h"
 #include <sstream>
 #include "AssetManager.h"
+#include <sdl_mixer.h>
+#include "audio.h"
 std::chrono::steady_clock::time_point lastSpawnTime;
 int spawnCooldown = 2000; 
 Map* map;
 Manager manager;
-
+bool Game::isRunning = false;
+bool Game::spawnTriggered = false;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 AssetManager* Game::assets = new AssetManager(&manager);
 
 SDL_Rect Game::camera = { 0,0,800,640 };
-Game::GameState Game::gameState = MENU;
-bool entitiesInitialized = false;
 
+Menu* menu = nullptr;
+TTF_Font* Game::font = nullptr;
+GameState currentState = GameState::PLAYING;
+bool playerWon = false;
+auto& player = manager.addEntity();
+auto& boss = manager.addEntity();
 auto& label(manager.addEntity());
 auto& label2(manager.addEntity());
-bool Game::isRunning = false;
-bool Game::spawnTriggered = false;
-auto& player(manager.addEntity());
-auto& boss(manager.addEntity());
-SDL_Rect startButtonRect = { 300, 400, 200, 80 };
-SDL_Rect titleTextRect = { 250, 150, 300, 100 };
-
 Game::Game()
 {
 }
@@ -71,7 +71,22 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	{
 		std::cout << "Error : SDL_TTF" << std::endl;
 	}
-	
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+		std::cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << std::endl;
+		isRunning = false;
+		return;
+	}
+
+	startGame();
+}
+void Game::startGame() {
+
+	AudioManager::Init();
+	AudioManager::LoadSound("hit", "assets/enemy.wav");
+	AudioManager::LoadSound("lost", "assets/lost.wav");
+	AudioManager::LoadSound("win", "assets/win.wav");
+	AudioManager::LoadMusic("bgm", "assets/background.mp3");
+	AudioManager::PlayMusic("bgm", -1);
 	assets->AddFont("OpenSans", "Assets/OpenSans.ttf", 16);
 	assets->AddTexture("terrain_tiles", "Assets/terrain_ss.png");
 	assets->AddTexture("player", "Assets/player_anims.png");
@@ -82,9 +97,9 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	assets->AddTexture("bomb", "Assets/bomb.png");
 	assets->AddTexture("startButton", "Assets/startButton.png");
 	assets->AddTexture("titleText", "Assets/titleText.png");
-
+	Game::font = TTF_OpenFont("Assets/OpenSans.ttf", 16);
 	map = new Map("terrain_tiles", 3, 32);
-	
+
 
 	map->LoadMap("assets/map.map", 25, 20);
 
@@ -99,7 +114,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 	label.addComponent<UILabel>(10, 10, "Test String", "OpenSans", white);
 	label2.addComponent<UILabel>(10, 30, "Test String", "OpenSans", white);
-	
+
 	boss.addComponent<TransformComponent>(1120, 750, 32, 32, 5);
 	boss.addComponent<SpriteComponent>("boss", true);
 	boss.addComponent<HealthComponent>(2000);
@@ -142,13 +157,48 @@ auto& enemies(manager.getGroup(Game::groupEnemies));
 auto& bosses(manager.getGroup(Game::groupBosses));
 auto& bombs(manager.getGroup(Game::groupBombs));
 
-void Game::handleEvents()
-{
-
+void Game::handleEvents() {
 	SDL_PollEvent(&event);
 	switch (event.type) {
 	case SDL_QUIT:
 		isRunning = false;
+		break;
+	case SDL_KEYDOWN:
+		if (currentState == GameState::PLAYING) {
+			switch (event.key.keysym.sym) {
+			case SDLK_w:
+				player.getComponent<TransformComponent>().velocity.y = -1;
+				break;
+			case SDLK_s:
+				player.getComponent<TransformComponent>().velocity.y = 1;
+				break;
+			case SDLK_a:
+				player.getComponent<TransformComponent>().velocity.x = -1;
+				break;
+			case SDLK_d:
+				player.getComponent<TransformComponent>().velocity.x = 1;
+				break;
+			}
+		}
+		else if (currentState == GameState::GAME_OVER) {
+			if (event.key.keysym.sym == SDLK_ESCAPE) {
+				isRunning=false;
+			}
+		}
+		break;
+	case SDL_KEYUP:
+		if (currentState == GameState::PLAYING) {
+			switch (event.key.keysym.sym) {
+			case SDLK_w:
+			case SDLK_s:
+				player.getComponent<TransformComponent>().velocity.y = 0;
+				break;
+			case SDLK_a:
+			case SDLK_d:
+				player.getComponent<TransformComponent>().velocity.x = 0;
+				break;
+			}
+		}
 		break;
 	default:
 		break;
@@ -156,9 +206,11 @@ void Game::handleEvents()
 }
 
 
-
 void Game::update()
 {
+	if (currentState != GameState::PLAYING) return;
+
+
 
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
@@ -199,6 +251,7 @@ void Game::update()
 		{
 			std::cout << "Boss Hit" << std::endl;
 			boss.getComponent<HealthComponent>().takeDamage(50, false);
+			AudioManager::PlaySound("hit", 0);
 		}
 		
 	}
@@ -213,7 +266,7 @@ void Game::update()
 			if (distance < explosionRadius) {
 				std::cout << "Enemy Hit" << std::endl;
 				e->getComponent<HealthComponent>().takeDamage(100, false);
-				
+				AudioManager::PlaySound("hit", 0);
 			
 			}
 		}
@@ -230,15 +283,24 @@ void Game::update()
 		
 
 		if (distance > 1) {
-			enemyTransform.velocity.x = (dx / distance) ;
-			enemyTransform.velocity.y = (dy / distance);
+			if (boss.getComponent<HealthComponent>().health < 1000) {
+				enemyTransform.velocity.x = (dx / distance)/1.15;
+				enemyTransform.velocity.y = (dy / distance)/1.15;
+			}
+			else {
+				enemyTransform.velocity.x = (dx / distance) / 1.5;
+				enemyTransform.velocity.y = (dy / distance) / 1.5;
+			}
 		}
 		for (auto& p : projectiles)
 		{
 			if (Collision::AABB(p->getComponent<ColliderComponent>().collider, e->getComponent<ColliderComponent>().collider))
 			{
 				std::cout << "Enemy Hit" << std::endl;
+
 				e->getComponent<HealthComponent>().takeDamage(50,false);
+
+				AudioManager::PlaySound("hit", 0);	
 				p->destroy();
 			}
 		}
@@ -282,6 +344,19 @@ void Game::update()
 			lastSpawnTime = std::chrono::steady_clock::now();  // Reset timer
 		}
 	}
+	if (player.getComponent<HealthComponent>().health <= 0) {
+		playerWon = false;
+		currentState = GameState::GAME_OVER;
+		AudioManager::PlaySound("lost", 0);
+		AudioManager::StopMusic();
+	}
+
+	if (boss.getComponent<HealthComponent>().health <= 0) {
+		playerWon = true;
+		currentState = GameState::GAME_OVER;
+		AudioManager::PlaySound("win", 0);
+		AudioManager::StopMusic();
+	}
 
 	camera.x = player.getComponent<TransformComponent>().position.x - 400;
 	camera.y = player.getComponent<TransformComponent>().position.y - 320;
@@ -300,39 +375,71 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+		for (auto& t : tiles)
+		{
+			t->draw();
+		}
 
-	for (auto& t : tiles)
-	{
-		t->draw();
-	}
+		for (auto& c : colliders)
+		{
+			c->draw();
+		}
 
-	for (auto& c : colliders)
-	{
-		c->draw();
-	}
+		for (auto& p : players)
+		{
+			p->draw();
+		}
 
-	for (auto& p : players)
-	{
-		p->draw();
-	}
+		for (auto& p : projectiles)
+		{
+			p->draw();
+		}
+		for (auto& e : enemies) {
+			e->draw();
+		}
+		for (auto& b : bosses)
+		{
+			b->draw();
+		}
+		for (auto& bo : bombs)
+		{
+			bo->draw();
+		}
+		label.draw();
+		label2.draw();
 
-	for (auto& p : projectiles)
-	{
-		p->draw();
+	if (currentState == GameState::GAME_OVER) {
+		SDL_Color black = { 255, 255, 255 };
+		std::string msg;
+		if (playerWon) {
+			msg = "You Win!";
+			SDL_Surface* surface = TTF_RenderText_Solid(Game::font, msg.c_str(), black);
+			SDL_Texture* text = SDL_CreateTextureFromSurface(renderer, surface);
+			SDL_Rect textRect = { 350, 250, surface->w, surface->h };
+			SDL_FreeSurface(surface);
+			SDL_RenderCopy(renderer, text, nullptr, &textRect);
+			SDL_DestroyTexture(text);
+			
+		}
+		else {
+			msg = "Game Over";
+			SDL_Surface* surface = TTF_RenderText_Solid(Game::font, msg.c_str(), black);
+			SDL_Texture* text = SDL_CreateTextureFromSurface(renderer, surface);
+			SDL_Rect textRect = { 300, 250, surface->w, surface->h };
+			SDL_FreeSurface(surface);
+			SDL_RenderCopy(renderer, text, nullptr, &textRect);
+			SDL_DestroyTexture(text);
+			
+		}
+		// Press R to restart
+		SDL_Surface* subSurface = TTF_RenderText_Solid(Game::font, "Press esc to quit", black);
+		SDL_Texture* subText = SDL_CreateTextureFromSurface(renderer, subSurface);
+		SDL_Rect subRect = { 300, 350, subSurface->w, subSurface->h };
+		SDL_FreeSurface(subSurface);
+		SDL_RenderCopy(renderer, subText, nullptr, &subRect);
+		SDL_DestroyTexture(subText);
+		
 	}
-	for (auto& e : enemies) {
-		e->draw();
-	}
-	for (auto& b : bosses)
-	{
-		b->draw();
-	}
-	for (auto& bo : bombs)
-	{
-		bo->draw();
-	}
-	label.draw();
-	label2.draw();
 	SDL_RenderPresent(renderer);
 
 }
@@ -340,7 +447,6 @@ void Game::render()
 void Game::clean()
 {
 	
-
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

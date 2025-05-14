@@ -4,6 +4,7 @@
 #include "ECS.h"
 #include "Components.h"
 #include <chrono>
+#include "audio.h"
 
 class KeyboardController : public Component {
 public:
@@ -13,12 +14,14 @@ public:
 	int bombCooldown = 10000;
 	std::chrono::steady_clock::time_point lastBulletTime;
 	std::chrono::steady_clock::time_point lastBombTime;
-
+	
 	void init() override {
 		transform = &entity->getComponent<TransformComponent>();
 		sprite = &entity->getComponent<SpriteComponent>();
 		lastBulletTime = std::chrono::steady_clock::now();
 		lastBombTime = std::chrono::steady_clock::now();
+		AudioManager::LoadSound("bullet", "assets/bullet.wav");
+		AudioManager::LoadSound("bomb", "assets/bomb.wav");
 	}
 	void update() override {
 		if (Game::event.type == SDL_KEYDOWN) {
@@ -51,6 +54,7 @@ public:
 				if (elapsed < bulletCooldown) return;
 				lastBulletTime = std::chrono::steady_clock::now();
 				Game::assets->CreateProjectile(Vector2D(transform->position.x + 40, transform->position.y + 30), 1000, 2, "projectile");
+				AudioManager::PlaySound("bullet", 0);
 			}
 			if (Game::event.button.button == SDL_BUTTON_RIGHT) {
 			
@@ -59,6 +63,7 @@ public:
 				if (elapsed < bombCooldown) return;
 				lastBombTime = std::chrono::steady_clock::now();
 				Game::assets->CreateBomb(Vector2D(transform->position.x + 40, transform->position.y + 30), 1000, 2, "bomb");
+				AudioManager::PlaySound("bomb", 0);
 			}
 			
 		}

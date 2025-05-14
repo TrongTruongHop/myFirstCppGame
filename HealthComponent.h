@@ -19,7 +19,7 @@ public:
         if (health <= 0) {
             std::cout << "Entity destroyed!\n";
             entity->destroy();
-			if (endGame) Game::isRunning = false;
+			
         }
     }
 };

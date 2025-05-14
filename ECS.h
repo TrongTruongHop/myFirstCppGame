@@ -121,7 +121,12 @@ public:
 	void AddToGroup(Entity* mEntity, Group mGroup) {
 		groupedEntities[mGroup].emplace_back(mEntity);
 	}
-
+	void clear() {
+		for (auto& e : entities) {
+			e->destroy();
+		}
+		refresh();
+	}
 	std::vector<Entity*>& getGroup(Group mGroup) {
 		return groupedEntities[mGroup];
 	}
