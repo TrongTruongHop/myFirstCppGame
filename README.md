@@ -6,23 +6,23 @@ FURY là một game hành động 2D nơi người chơi nhập vai một chiế
   GAMEPLAY:
 
   
-Di chuyển bằng các phím W, A, S, D.
+- Di chuyển bằng các phím W, A, S, D.
 
-Tấn công từ xa bằng đạn bằng cách ấn chuột trái để bắn.
+- Tấn công từ xa bằng đạn bằng cách ấn chuột trái để bắn.
 
-Ném bom bằng cách ấn chuột phải (giới hạn theo thời gian hồi).
+- Ném bom bằng cách ấn chuột phải (giới hạn theo thời gian hồi).
 
-Kẻ địch tự động đuổi theo bạn và sẽ sinh ra từ các vị trí cố định.
+- Kẻ địch tự động đuổi theo bạn và sẽ sinh ra từ các vị trí cố định.
 
-Boss có lượng máu lớn và sẽ sinh thêm kẻ địch khi HP xuống thấp.
+- Boss có lượng máu lớn và sẽ sinh thêm kẻ địch khi HP xuống thấp.
 
-Kẻ địch cũng sẽ di chuyển nhanh hơn về phía bạn khi HP xuống thấp.
+- Kẻ địch cũng sẽ di chuyển nhanh hơn về phía bạn khi HP xuống thấp.
 
-Game Over khi bạn hoặc boss chết:
+- Game Over khi bạn hoặc boss chết:
 
-You Win! nếu boss chết.
+- You Win! nếu boss chết.
 
-You Lose! nếu người chơi chết.
+- You Lose! nếu người chơi chết.
 
 
 CÁCH CÀI ĐẶT:
