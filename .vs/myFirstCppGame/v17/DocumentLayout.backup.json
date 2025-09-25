@@ -1,0 +1,191 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\AssetManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:AssetManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Components.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Components.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\TileComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:TileComponent.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Collision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Collision.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Vector2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Vector2D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|D:\\FILE VJPPRO\\code\\myFirstCppGame\\Collision.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{49F1127C-BCD2-4EB8-A033-095C42B81087}|myFirstCppGame.vcxproj|solutionrelative:Collision.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 10,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "main.cpp",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\main.cpp",
+              "RelativeDocumentMoniker": "main.cpp",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\main.cpp",
+              "RelativeToolTip": "main.cpp",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-18T12:38:44.141Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Components.h",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Components.h",
+              "RelativeDocumentMoniker": "Components.h",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Components.h",
+              "RelativeToolTip": "Components.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-09-18T12:38:36.3Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Map.cpp",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Map.cpp",
+              "RelativeDocumentMoniker": "Map.cpp",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Map.cpp",
+              "RelativeToolTip": "Map.cpp",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-18T12:38:06.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Vector2D.h",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Vector2D.h",
+              "RelativeDocumentMoniker": "Vector2D.h",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Vector2D.h",
+              "RelativeToolTip": "Vector2D.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-09-18T12:37:48.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Map.h",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\map.h",
+              "RelativeDocumentMoniker": "map.h",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\map.h",
+              "RelativeToolTip": "map.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-09-18T12:37:38.126Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Collision.cpp",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Collision.cpp",
+              "RelativeDocumentMoniker": "Collision.cpp",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Collision.cpp",
+              "RelativeToolTip": "Collision.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-18T12:37:32.558Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TileComponent.h",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\TileComponent.h",
+              "RelativeDocumentMoniker": "TileComponent.h",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\TileComponent.h",
+              "RelativeToolTip": "TileComponent.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-09-18T12:37:18.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Collision.h",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Collision.h",
+              "RelativeDocumentMoniker": "Collision.h",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Collision.h",
+              "RelativeToolTip": "Collision.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-09-18T12:37:11.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Game.cpp",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Game.cpp",
+              "RelativeDocumentMoniker": "Game.cpp",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\Game.cpp*",
+              "RelativeToolTip": "Game.cpp*",
+              "ViewState": "AgIAAHIAAAAAAAAAAADwv5AAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-09-18T12:37:06.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AssetManager.h",
+              "DocumentMoniker": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\AssetManager.h",
+              "RelativeDocumentMoniker": "AssetManager.h",
+              "ToolTip": "D:\\FILE VJPPRO\\code\\myFirstCppGame\\AssetManager.h",
+              "RelativeToolTip": "AssetManager.h",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACEAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-09-18T12:50:50.658Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

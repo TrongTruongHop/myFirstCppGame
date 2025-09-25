@@ -28,7 +28,7 @@ SDL_Rect Game::camera = { 0,0,800,640 };
 
 Menu* menu = nullptr;
 TTF_Font* Game::font = nullptr;
-GameState currentState = GameState::PLAYING;
+GameState currentState = GameState::MENU;
 bool playerWon = false;
 auto& player = manager.addEntity();
 auto& boss = manager.addEntity();
@@ -77,7 +77,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		return;
 	}
 
-	startGame();
+	
 }
 void Game::startGame() {
 
@@ -131,19 +131,18 @@ void Game::spawnEnemy(std::string type, int x, int y) {
 		enemy.addComponent<SpriteComponent>("enemy_fast",true);
 		enemy.addComponent<HealthComponent>(50);
 
-		speed = 3;
+		
 	}
 	else {
 		enemy.addComponent<SpriteComponent>("enemy_slow",true);
 		enemy.addComponent<HealthComponent>(100);
-		speed = 1;
+		
 	}
 
 	enemy.addGroup(Game::groupEnemies);
 	enemy.addComponent<ColliderComponent>("enemy");
 	
-	enemy.getComponent<TransformComponent>().velocity.x = speed;
-	enemy.getComponent<TransformComponent>().velocity.y = speed;	
+		
 
 }
 
@@ -200,9 +199,25 @@ void Game::handleEvents() {
 			}
 		}
 		break;
+	case SDL_MOUSEBUTTONDOWN:
+		if (currentState == GameState::MENU) {
+			int x = event.button.x;
+			int y = event.button.y;
+
+			// Match button rectangle used in render()
+			SDL_Rect btnRect = { 300, 300, 200, 80 };
+			if (x >= btnRect.x && x <= btnRect.x + btnRect.w &&
+				y >= btnRect.y && y <= btnRect.y + btnRect.h) {
+				// Start the game
+				currentState = GameState::PLAYING;
+				startGame();
+			}
+		}
+		break;
 	default:
 		break;
 	}
+
 }
 
 
@@ -375,6 +390,27 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+	if (currentState == GameState::MENU) {
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // black background
+		SDL_RenderClear(renderer);
+
+		// Title
+		SDL_Texture* title = assets->GetTexture("titleText");
+
+		SDL_Rect titleRect = { 200, 100, 400, 100 };
+		SDL_RenderCopy(renderer, title, nullptr, &titleRect);
+
+		// Start button
+		SDL_Texture* startBtn = assets->GetTexture("startButton");
+		if (!assets->GetTexture("startButton")) {
+			std::cout << "Failed to load startButton.png: " << SDL_GetError() << std::endl;
+		}
+		SDL_Rect btnRect = { 300, 300, 200, 80 };
+		SDL_RenderCopy(renderer, startBtn, nullptr, &btnRect);
+
+		SDL_RenderPresent(renderer);
+		return;
+	}
 		for (auto& t : tiles)
 		{
 			t->draw();
@@ -431,7 +467,7 @@ void Game::render()
 			SDL_DestroyTexture(text);
 			
 		}
-		// Press R to restart
+		
 		SDL_Surface* subSurface = TTF_RenderText_Solid(Game::font, "Press esc to quit", black);
 		SDL_Texture* subText = SDL_CreateTextureFromSurface(renderer, subSurface);
 		SDL_Rect subRect = { 300, 350, subSurface->w, subSurface->h };

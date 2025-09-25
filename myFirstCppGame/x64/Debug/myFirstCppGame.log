@@ -1,0 +1,47 @@
+﻿  Game.cpp
+D:\FILE VJPPRO\code\myFirstCppGame\TileComponent.h(26,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\FILE VJPPRO\code\myFirstCppGame\TileComponent.h(27,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\FILE VJPPRO\code\myFirstCppGame\TileComponent.h(40,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\FILE VJPPRO\code\myFirstCppGame\TileComponent.h(41,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(129,6): warning C4101: 'speed': unreferenced local variable
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(302,48): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(303,48): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(306,49): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(307,49): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(376,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(377,66): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33): warning C4244:         with
+D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33): warning C4244:         [
+D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33): warning C4244:             _Ty=int
+D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33): warning C4244:         ]
+  (compiling source file 'Game.cpp')
+      D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33):
+      the template instantiation context (the oldest one first) is
+          D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(106,9):
+          see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int,int,int,int,int>(int &&,int &&,int &&,int &&,int &&)' being compiled
+          with
+          [
+              T=TransformComponent
+          ]
+  
+D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'Game.cpp')
+      D:\FILE VJPPRO\code\myFirstCppGame\ECS.h(83,33):
+      the template instantiation context (the oldest one first) is
+          D:\FILE VJPPRO\code\myFirstCppGame\Game.cpp(127,8):
+          see reference to function template instantiation 'T &Entity::addComponent<TransformComponent,int&,int&,int,int,int>(int &,int &,int &&,int &&,int &&)' being compiled
+          with
+          [
+              T=TransformComponent
+          ]
+  
+  myFirstCppGame.vcxproj -> D:\FILE VJPPRO\code\myFirstCppGame\x64\Debug\myFirstCppGame.exe
