@@ -25,6 +25,7 @@ public:
 	void clean();
 
 	void startGame();
+	void resetGame();
 	static void renderMenu();
 	static void handleMenuEvent(SDL_Event& e);
 	static SDL_Renderer* renderer;

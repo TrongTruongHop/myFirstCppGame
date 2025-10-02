@@ -30,10 +30,10 @@ Menu* menu = nullptr;
 TTF_Font* Game::font = nullptr;
 GameState currentState = GameState::MENU;
 bool playerWon = false;
-auto& player = manager.addEntity();
-auto& boss = manager.addEntity();
-auto& label(manager.addEntity());
-auto& label2(manager.addEntity());
+Entity* player;
+Entity* boss;
+Entity* label;
+Entity* label2;
 Game::Game()
 {
 }
@@ -80,47 +80,73 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	
 }
 void Game::startGame() {
+	// --- Load assets once ---
+	static bool assetsLoaded = false;
+	if (!assetsLoaded) {
+		AudioManager::Init();
+		AudioManager::LoadSound("hit", "assets/enemy.wav");
+		AudioManager::LoadSound("lost", "assets/lost.wav");
+		AudioManager::LoadSound("win", "assets/win.wav");
+		AudioManager::LoadMusic("bgm", "assets/background.mp3");
 
-	AudioManager::Init();
-	AudioManager::LoadSound("hit", "assets/enemy.wav");
-	AudioManager::LoadSound("lost", "assets/lost.wav");
-	AudioManager::LoadSound("win", "assets/win.wav");
-	AudioManager::LoadMusic("bgm", "assets/background.mp3");
-	AudioManager::PlayMusic("bgm", -1);
-	assets->AddFont("OpenSans", "Assets/OpenSans.ttf", 16);
-	assets->AddTexture("terrain_tiles", "Assets/terrain_ss.png");
-	assets->AddTexture("player", "Assets/player_anims.png");
-	assets->AddTexture("projectile", "Assets/ColTex.png");
-	assets->AddTexture("enemy_slow", "Assets/enemy2.png");
-	assets->AddTexture("enemy_fast", "Assets/enemy1.png");
-	assets->AddTexture("boss", "Assets/boss.png");
-	assets->AddTexture("bomb", "Assets/bomb.png");
-	assets->AddTexture("startButton", "Assets/startButton.png");
-	assets->AddTexture("titleText", "Assets/titleText.png");
-	Game::font = TTF_OpenFont("Assets/OpenSans.ttf", 16);
-	map = new Map("terrain_tiles", 3, 32);
+		assets->AddFont("OpenSans", "Assets/OpenSans.ttf", 16);
+		assets->AddTexture("terrain_tiles", "Assets/terrain_ss.png");
+		assets->AddTexture("player", "Assets/player_anims.png");
+		assets->AddTexture("projectile", "Assets/ColTex.png");
+		assets->AddTexture("enemy_slow", "Assets/enemy2.png");
+		assets->AddTexture("enemy_fast", "Assets/enemy1.png");
+		assets->AddTexture("boss", "Assets/boss.png");
+		assets->AddTexture("bomb", "Assets/bomb.png");
+		assets->AddTexture("startButton", "Assets/startButton.png");
+		assets->AddTexture("titleText", "Assets/titleText.png");
 
+		Game::font = TTF_OpenFont("Assets/OpenSans.ttf", 16);
+		map = new Map("terrain_tiles", 3, 32);
+		map->LoadMap("assets/map.map", 25, 20);
 
-	map->LoadMap("assets/map.map", 25, 20);
+		assetsLoaded = true;
+	}
 
-	player.addComponent<TransformComponent>(150, 1200, 32, 32, 3);
-	player.addComponent<SpriteComponent>("player", true);
-	player.addComponent<KeyboardController>();
-	player.addComponent<ColliderComponent>("player");
-	player.addComponent<HealthComponent>(100);
-	player.addGroup(groupPlayers);
+	resetGame();  // build player/boss/etc
+}
+void Game::resetGame() {
+	for (auto& e : manager.getGroup(groupEnemies)) e->destroy();
+	for (auto& p : manager.getGroup(groupProjectiles)) p->destroy();
+	for (auto& bo : manager.getGroup(groupBombs)) bo->destroy();
+	
+	manager.refresh();
+	manager.update();
+
+	spawnTriggered = false;
+	playerWon = false;
+	spawnCooldown = 2000;
+
+	player = &manager.addEntity();
+	boss = &manager.addEntity();
+	label = &manager.addEntity();
+	label2 = &manager.addEntity();
+
+	player->addComponent<TransformComponent>(150, 1200, 32, 32, 3);
+	player->addComponent<SpriteComponent>("player", true);
+	player->addComponent<KeyboardController>();
+	player->addComponent<ColliderComponent>("player");
+	player->addComponent<HealthComponent>(10);
+	player->addGroup(groupPlayers);
 
 	SDL_Color white = { 255, 255, 255, 255 };
+	label->addComponent<UILabel>(10, 10, "Player HP: 100", "OpenSans", white);
+	label2->addComponent<UILabel>(10, 30, "Boss HP: 2000", "OpenSans", white);
 
-	label.addComponent<UILabel>(10, 10, "Test String", "OpenSans", white);
-	label2.addComponent<UILabel>(10, 30, "Test String", "OpenSans", white);
+	boss->addComponent<TransformComponent>(1120, 750, 32, 32, 5);
+	boss->addComponent<SpriteComponent>("boss", true);
+	boss->addComponent<HealthComponent>(2000);
+	boss->addComponent<ColliderComponent>("boss");
+	boss->addGroup(groupBosses);
 
-	boss.addComponent<TransformComponent>(1120, 750, 32, 32, 5);
-	boss.addComponent<SpriteComponent>("boss", true);
-	boss.addComponent<HealthComponent>(2000);
-	boss.addComponent<ColliderComponent>("boss");
-	boss.addGroup(groupBosses);
+	// Restart music
+	AudioManager::PlayMusic("bgm", -1);
 }
+
 void Game::spawnEnemy(std::string type, int x, int y) {
 	
 	auto& enemy = manager.addEntity();
@@ -166,22 +192,28 @@ void Game::handleEvents() {
 		if (currentState == GameState::PLAYING) {
 			switch (event.key.keysym.sym) {
 			case SDLK_w:
-				player.getComponent<TransformComponent>().velocity.y = -1;
+				player->getComponent<TransformComponent>().velocity.y = -1;
 				break;
 			case SDLK_s:
-				player.getComponent<TransformComponent>().velocity.y = 1;
+				player->getComponent<TransformComponent>().velocity.y = 1;
 				break;
 			case SDLK_a:
-				player.getComponent<TransformComponent>().velocity.x = -1;
+				player->getComponent<TransformComponent>().velocity.x = -1;
 				break;
 			case SDLK_d:
-				player.getComponent<TransformComponent>().velocity.x = 1;
+				player->getComponent<TransformComponent>().velocity.x = 1;
 				break;
 			}
 		}
 		else if (currentState == GameState::GAME_OVER) {
-			if (event.key.keysym.sym == SDLK_ESCAPE) {
-				isRunning=false;
+			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				isRunning = false;
+				break;
+			case SDLK_m:
+				             // <-- reset everything
+				currentState = GameState::MENU;
+				break;
 			}
 		}
 		break;
@@ -190,11 +222,11 @@ void Game::handleEvents() {
 			switch (event.key.keysym.sym) {
 			case SDLK_w:
 			case SDLK_s:
-				player.getComponent<TransformComponent>().velocity.y = 0;
+				player->getComponent<TransformComponent>().velocity.y = 0;
 				break;
 			case SDLK_a:
 			case SDLK_d:
-				player.getComponent<TransformComponent>().velocity.x = 0;
+				player->getComponent<TransformComponent>().velocity.x = 0;
 				break;
 			}
 		}
@@ -227,15 +259,15 @@ void Game::update()
 
 
 
-	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
-	Vector2D playerPos = player.getComponent<TransformComponent>().position;
+	SDL_Rect playerCol = player->getComponent<ColliderComponent>().collider;
+	Vector2D playerPos = player->getComponent<TransformComponent>().position;
 	
 	std::stringstream ss;
 	std::stringstream ss2;
-	ss << "Player HP: " << player.getComponent<HealthComponent>().health;
-	label.getComponent<UILabel>().SetLabelText(ss.str(), "OpenSans");
-	ss2 << "Boss HP: " << boss.getComponent<HealthComponent>().health;
-	label2.getComponent<UILabel>().SetLabelText(ss2.str(), "OpenSans");
+	ss << "Player HP: " << player->getComponent<HealthComponent>().health;
+	label->getComponent<UILabel>().SetLabelText(ss.str(), "OpenSans");
+	ss2 << "Boss HP: " << boss->getComponent<HealthComponent>().health;
+	label2->getComponent<UILabel>().SetLabelText(ss2.str(), "OpenSans");
 
 	manager.refresh();
 	manager.update();
@@ -251,7 +283,7 @@ void Game::update()
 		SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
 		if (Collision::AABB(cCol, playerCol))
 		{
-			player.getComponent<TransformComponent>().position = playerPos;
+			player->getComponent<TransformComponent>().position = playerPos;
 		}
 	}
 
@@ -262,10 +294,10 @@ void Game::update()
 			std::cout << "Player Hit" << std::endl;
 			
 		}
-		if (Collision::AABB(boss.getComponent<ColliderComponent>().collider, p->getComponent<ColliderComponent>().collider))
+		if (Collision::AABB(boss->getComponent<ColliderComponent>().collider, p->getComponent<ColliderComponent>().collider))
 		{
 			std::cout << "Boss Hit" << std::endl;
-			boss.getComponent<HealthComponent>().takeDamage(50, false);
+			boss->getComponent<HealthComponent>().takeDamage(50, false);
 			AudioManager::PlaySound("hit", 0);
 		}
 		
@@ -287,7 +319,7 @@ void Game::update()
 		}
 	}
 	for (auto& e : enemies) {
-		auto& playerTransform = player.getComponent<TransformComponent>();
+		auto& playerTransform = player->getComponent<TransformComponent>();
 		auto& enemyTransform = e->getComponent<TransformComponent>();
 
 		float dx = playerTransform.position.x - enemyTransform.position.x;
@@ -298,7 +330,7 @@ void Game::update()
 		
 
 		if (distance > 1) {
-			if (boss.getComponent<HealthComponent>().health < 1000) {
+			if (boss->getComponent<HealthComponent>().health < 1000) {
 				enemyTransform.velocity.x = (dx / distance)/1.15;
 				enemyTransform.velocity.y = (dy / distance)/1.15;
 			}
@@ -319,10 +351,10 @@ void Game::update()
 				p->destroy();
 			}
 		}
-		if (Collision::AABB(player.getComponent<ColliderComponent>().collider, e->getComponent<ColliderComponent>().collider))
+		if (Collision::AABB(player->getComponent<ColliderComponent>().collider, e->getComponent<ColliderComponent>().collider))
 		{
 			std::cout << "Player Hit" << std::endl;
-			player.getComponent<HealthComponent>().takeDamage(10, true);
+			player->getComponent<HealthComponent>().takeDamage(10, true);
 			e->destroy();
 		}
 	}
@@ -359,22 +391,22 @@ void Game::update()
 			lastSpawnTime = std::chrono::steady_clock::now();  // Reset timer
 		}
 	}
-	if (player.getComponent<HealthComponent>().health <= 0) {
+	if (player->getComponent<HealthComponent>().health <= 0) {
 		playerWon = false;
 		currentState = GameState::GAME_OVER;
 		AudioManager::PlaySound("lost", 0);
 		AudioManager::StopMusic();
 	}
 
-	if (boss.getComponent<HealthComponent>().health <= 0) {
+	if (boss->getComponent<HealthComponent>().health <= 0) {
 		playerWon = true;
 		currentState = GameState::GAME_OVER;
 		AudioManager::PlaySound("win", 0);
 		AudioManager::StopMusic();
 	}
 
-	camera.x = player.getComponent<TransformComponent>().position.x - 400;
-	camera.y = player.getComponent<TransformComponent>().position.y - 320;
+	camera.x = player->getComponent<TransformComponent>().position.x - 400;
+	camera.y = player->getComponent<TransformComponent>().position.y - 320;
 
 	if (camera.x < 0)
 		camera.x = 0;
@@ -395,16 +427,13 @@ void Game::render()
 		SDL_RenderClear(renderer);
 
 		// Title
-		SDL_Texture* title = assets->GetTexture("titleText");
+		SDL_Texture* title = IMG_LoadTexture(Game::renderer, "Assets/title.png");
 
 		SDL_Rect titleRect = { 200, 100, 400, 100 };
 		SDL_RenderCopy(renderer, title, nullptr, &titleRect);
 
 		// Start button
-		SDL_Texture* startBtn = assets->GetTexture("startButton");
-		if (!assets->GetTexture("startButton")) {
-			std::cout << "Failed to load startButton.png: " << SDL_GetError() << std::endl;
-		}
+		SDL_Texture* startBtn = IMG_LoadTexture(Game::renderer, "Assets/startButton.png");
 		SDL_Rect btnRect = { 300, 300, 200, 80 };
 		SDL_RenderCopy(renderer, startBtn, nullptr, &btnRect);
 
@@ -441,8 +470,8 @@ void Game::render()
 		{
 			bo->draw();
 		}
-		label.draw();
-		label2.draw();
+		label->draw();
+		label2->draw();
 
 	if (currentState == GameState::GAME_OVER) {
 		SDL_Color black = { 255, 255, 255 };
